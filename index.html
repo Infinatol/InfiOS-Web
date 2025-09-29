@@ -20,7 +20,6 @@
             position: relative;
         }
 
-        /* Animated Background */
         .bg-animation {
             position: absolute;
             top: 0;
@@ -40,7 +39,6 @@
             66% { transform: translate(-20px, 20px) scale(0.95); }
         }
 
-        /* Desktop */
         .desktop {
             position: relative;
             width: 100%;
@@ -49,7 +47,6 @@
             z-index: 1;
         }
 
-        /* Top Bar */
         .top-bar {
             position: absolute;
             top: 0;
@@ -110,7 +107,6 @@
             opacity: 1;
         }
 
-        /* Desktop Icons */
         .desktop-icons {
             display: grid;
             grid-template-columns: repeat(auto-fill, 80px);
@@ -151,7 +147,6 @@
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
-        /* Windows */
         .window {
             position: absolute;
             background: rgba(255, 255, 255, 0.85);
@@ -162,6 +157,8 @@
             overflow: hidden;
             display: none;
             flex-direction: column;
+            min-width: 400px;
+            min-height: 300px;
         }
 
         .window.active {
@@ -189,6 +186,7 @@
             align-items: center;
             padding: 0 15px;
             cursor: move;
+            user-select: none;
         }
 
         .window-controls {
@@ -222,45 +220,145 @@
         .window-content {
             flex: 1;
             overflow: auto;
-            padding: 20px;
             background: rgba(255, 255, 255, 0.3);
         }
 
-        /* Terminal */
+        /* Terminal Styles */
         .terminal-content {
-            background: rgba(0, 0, 0, 0.85);
-            color: #00ff00;
+            background: rgba(10, 10, 20, 0.95);
+            color: #00ff41;
             font-family: 'Courier New', monospace;
+            font-size: 14px;
             padding: 15px;
             height: 100%;
             overflow-y: auto;
+            line-height: 1.6;
         }
 
         .terminal-line {
-            margin-bottom: 5px;
-            line-height: 1.5;
+            margin-bottom: 2px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .terminal-prompt {
-            color: #00aaff;
+            color: #00d9ff;
+            font-weight: bold;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
         }
 
         .terminal-input {
             background: transparent;
             border: none;
-            color: #00ff00;
+            color: #00ff41;
             font-family: 'Courier New', monospace;
+            font-size: 14px;
             outline: none;
-            width: calc(100% - 80px);
+            flex: 1;
+            caret-color: #00ff41;
+        }
+
+        .terminal-error {
+            color: #ff6b6b;
+        }
+
+        .terminal-success {
+            color: #51cf66;
+        }
+
+        .terminal-info {
+            color: #74c0fc;
+        }
+
+        .terminal-warning {
+            color: #ffd43b;
+        }
+
+        /* Files Explorer */
+        .files-toolbar {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .files-path {
+            flex: 1;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .file-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .file-item:hover {
+            background: rgba(100, 100, 255, 0.1);
+        }
+
+        .file-item.selected {
+            background: rgba(100, 100, 255, 0.2);
+        }
+
+        .file-icon {
+            font-size: 40px;
+        }
+
+        .file-name {
+            font-size: 12px;
+            color: #333;
+            text-align: center;
+            word-break: break-word;
         }
 
         /* Browser */
-        .browser-bar {
+        .browser-toolbar {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             padding: 10px;
             background: rgba(255, 255, 255, 0.5);
             align-items: center;
+        }
+
+        .browser-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .browser-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .url-bar {
@@ -273,10 +371,45 @@
             font-size: 13px;
         }
 
-        .browser-iframe {
+        .browser-content {
+            padding: 30px;
+            text-align: center;
+            color: #666;
+        }
+
+        /* Text Editor */
+        .editor-toolbar {
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 5px;
+        }
+
+        .editor-btn {
+            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .editor-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .editor-textarea {
             width: 100%;
-            height: calc(100% - 50px);
+            height: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.4);
             border: none;
+            outline: none;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: none;
         }
 
         /* Dock */
@@ -326,202 +459,914 @@
             border-radius: 50%;
         }
 
-        /* Files Explorer */
-        .files-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 15px;
-        }
-
-        .file-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .file-item:hover {
-            background: rgba(100, 100, 255, 0.1);
-        }
-
-        .file-icon {
-            font-size: 40px;
-        }
-
-        .file-name {
-            font-size: 12px;
-            color: #333;
-            text-align: center;
+        .resize-handle {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            cursor: nwse-resize;
         }
     </style>
 </head>
 <body>
     <div class="bg-animation"></div>
 
-    <!-- Top Bar -->
     <div class="top-bar">
         <div class="top-bar-left">
             <div class="os-logo">∞ InfiOS</div>
-            <div class="menu-item">Fichier</div>
-            <div class="menu-item">Édition</div>
-            <div class="menu-item">Affichage</div>
+            <div class="menu-item" onclick="showAbout()">À propos</div>
+            <div class="menu-item" onclick="openWindow('settings')">Paramètres</div>
         </div>
         <div class="top-bar-right">
-            <span>29 Sep 15:42</span>
+            <span id="clock">29 Sep 15:42</span>
             <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M1 8l6 6 6-6"/>
-                <path d="M12 2v12"/>
-            </svg>
-            <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2v20M2 12h20"/>
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v6m0 6v6M23 12h-6m-6 0H1"/>
             </svg>
         </div>
     </div>
 
-    <!-- Desktop -->
     <div class="desktop">
         <div class="desktop-icons">
-            <div class="desktop-icon" onclick="openWindow('files')">
+            <div class="desktop-icon" ondblclick="openWindow('files')">
                 <div class="icon-image">📁</div>
                 <div class="icon-label">Fichiers</div>
             </div>
-            <div class="desktop-icon" onclick="openWindow('terminal')">
+            <div class="desktop-icon" ondblclick="openWindow('terminal')">
                 <div class="icon-image">⌨️</div>
                 <div class="icon-label">Terminal</div>
             </div>
-            <div class="desktop-icon" onclick="openWindow('browser')">
+            <div class="desktop-icon" ondblclick="openWindow('browser')">
                 <div class="icon-image">🌐</div>
                 <div class="icon-label">Navigateur</div>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('editor')">
+                <div class="icon-image">📝</div>
+                <div class="icon-label">Éditeur</div>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('calculator')">
+                <div class="icon-image">🔢</div>
+                <div class="icon-label">Calculatrice</div>
             </div>
         </div>
 
         <!-- Files Window -->
-        <div class="window" id="window-files" style="width: 600px; height: 400px; top: 80px; left: 100px;">
+        <div class="window" id="window-files" style="width: 650px; height: 450px; top: 80px; left: 100px;">
             <div class="window-header">
                 <div class="window-controls">
                     <div class="window-control close" onclick="closeWindow('files')"></div>
-                    <div class="window-control minimize"></div>
-                    <div class="window-control maximize"></div>
+                    <div class="window-control minimize" onclick="minimizeWindow('files')"></div>
+                    <div class="window-control maximize" onclick="maximizeWindow('files')"></div>
                 </div>
                 <div class="window-title">📁 Explorateur de fichiers</div>
             </div>
-            <div class="window-content">
-                <div class="files-grid">
-                    <div class="file-item">
-                        <div class="file-icon">📄</div>
-                        <div class="file-name">Document.txt</div>
-                    </div>
-                    <div class="file-item">
-                        <div class="file-icon">🖼️</div>
-                        <div class="file-name">Image.png</div>
-                    </div>
-                    <div class="file-item">
-                        <div class="file-icon">🎵</div>
-                        <div class="file-name">Musique.mp3</div>
-                    </div>
-                    <div class="file-item">
-                        <div class="file-icon">📦</div>
-                        <div class="file-name">Archive.zip</div>
-                    </div>
-                    <div class="file-item">
-                        <div class="file-icon">💻</div>
-                        <div class="file-name">Code.js</div>
-                    </div>
+            <div class="window-content" style="padding: 0;">
+                <div class="files-toolbar">
+                    <div class="browser-btn" onclick="fileNavigateBack()">◀</div>
+                    <div class="browser-btn" onclick="fileNavigateForward()">▶</div>
+                    <div class="files-path" id="current-path">/home/user</div>
+                    <div class="browser-btn" onclick="fileRefresh()">⟳</div>
                 </div>
+                <div class="files-grid" id="files-grid"></div>
             </div>
+            <div class="resize-handle"></div>
         </div>
 
         <!-- Terminal Window -->
-        <div class="window" id="window-terminal" style="width: 700px; height: 450px; top: 120px; left: 200px;">
+        <div class="window" id="window-terminal" style="width: 750px; height: 500px; top: 100px; left: 200px;">
             <div class="window-header">
                 <div class="window-controls">
                     <div class="window-control close" onclick="closeWindow('terminal')"></div>
-                    <div class="window-control minimize"></div>
-                    <div class="window-control maximize"></div>
+                    <div class="window-control minimize" onclick="minimizeWindow('terminal')"></div>
+                    <div class="window-control maximize" onclick="maximizeWindow('terminal')"></div>
                 </div>
-                <div class="window-title">⌨️ Terminal InfiOS</div>
+                <div class="window-title">⌨️ InfiShell Terminal</div>
             </div>
             <div class="window-content" style="padding: 0;">
-                <div class="terminal-content" id="terminal-output">
-                    <div class="terminal-line">InfiOS Web Terminal v1.0.0</div>
-                    <div class="terminal-line">Type 'help' for available commands</div>
-                    <div class="terminal-line"></div>
-                    <div class="terminal-line">
-                        <span class="terminal-prompt">user@infios:~$</span>
-                        <input type="text" class="terminal-input" id="terminal-input" autocomplete="off">
-                    </div>
-                </div>
+                <div class="terminal-content" id="terminal-output"></div>
             </div>
+            <div class="resize-handle"></div>
         </div>
 
         <!-- Browser Window -->
-        <div class="window" id="window-browser" style="width: 900px; height: 600px; top: 70px; left: 250px;">
+        <div class="window" id="window-browser" style="width: 900px; height: 600px; top: 60px; left: 250px;">
             <div class="window-header">
                 <div class="window-controls">
                     <div class="window-control close" onclick="closeWindow('browser')"></div>
-                    <div class="window-control minimize"></div>
-                    <div class="window-control maximize"></div>
+                    <div class="window-control minimize" onclick="minimizeWindow('browser')"></div>
+                    <div class="window-control maximize" onclick="maximizeWindow('browser')"></div>
                 </div>
-                <div class="window-title">🌐 Navigateur Web</div>
+                <div class="window-title">🌐 InfiBrowser</div>
             </div>
             <div class="window-content" style="padding: 0;">
-                <div class="browser-bar">
-                    <input type="text" class="url-bar" placeholder="https://example.com" value="about:blank">
+                <div class="browser-toolbar">
+                    <div class="browser-btn" onclick="browserBack()">◀</div>
+                    <div class="browser-btn" onclick="browserForward()">▶</div>
+                    <div class="browser-btn" onclick="browserRefresh()">⟳</div>
+                    <input type="text" class="url-bar" id="url-bar" placeholder="https://example.com" onkeypress="if(event.key==='Enter')browserNavigate()">
+                    <div class="browser-btn" onclick="browserNavigate()">→</div>
                 </div>
-                <div style="padding: 40px; text-align: center; color: #666;">
-                    <h2 style="margin-bottom: 20px;">Bienvenue sur InfiOS Web</h2>
-                    <p>Navigateur intégré - Tapez une URL pour commencer</p>
+                <div class="browser-content" id="browser-content">
+                    <h2 style="margin-bottom: 20px;">🌐 Bienvenue sur InfiBrowser</h2>
+                    <p>Navigateur web intégré à InfiOS</p>
+                    <p style="margin-top: 10px; font-size: 14px; color: #999;">Entrez une URL pour naviguer</p>
+                </div>
+            </div>
+            <div class="resize-handle"></div>
+        </div>
+
+        <!-- Text Editor Window -->
+        <div class="window" id="window-editor" style="width: 700px; height: 500px; top: 120px; left: 300px;">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('editor')"></div>
+                    <div class="window-control minimize" onclick="minimizeWindow('editor')"></div>
+                    <div class="window-control maximize" onclick="maximizeWindow('editor')"></div>
+                </div>
+                <div class="window-title">📝 InfiEdit - Sans titre</div>
+            </div>
+            <div class="window-content" style="padding: 0; display: flex; flex-direction: column;">
+                <div class="editor-toolbar">
+                    <button class="editor-btn" onclick="editorNew()">Nouveau</button>
+                    <button class="editor-btn" onclick="editorSave()">Enregistrer</button>
+                    <button class="editor-btn" onclick="editorClear()">Effacer</button>
+                </div>
+                <textarea class="editor-textarea" id="editor-text" placeholder="Commencez à écrire..."></textarea>
+            </div>
+            <div class="resize-handle"></div>
+        </div>
+
+        <!-- Calculator Window -->
+        <div class="window" id="window-calculator" style="width: 320px; height: 480px; top: 100px; left: 400px;">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('calculator')"></div>
+                    <div class="window-control minimize" onclick="minimizeWindow('calculator')"></div>
+                </div>
+                <div class="window-title">🔢 Calculatrice</div>
+            </div>
+            <div class="window-content" style="padding: 20px;">
+                <div style="background: rgba(0,0,0,0.7); color: white; padding: 20px; border-radius: 8px; text-align: right; font-size: 32px; margin-bottom: 15px; min-height: 60px; word-wrap: break-word;" id="calc-display">0</div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                    <button onclick="calcClear()" style="grid-column: span 2; padding: 15px; border: none; border-radius: 8px; background: #ff6b6b; color: white; font-size: 18px; cursor: pointer;">C</button>
+                    <button onclick="calcBackspace()" style="padding: 15px; border: none; border-radius: 8px; background: #ffa94d; color: white; font-size: 18px; cursor: pointer;">←</button>
+                    <button onclick="calcInput('/')" style="padding: 15px; border: none; border-radius: 8px; background: #748ffc; color: white; font-size: 18px; cursor: pointer;">÷</button>
+                    <button onclick="calcInput('7')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">7</button>
+                    <button onclick="calcInput('8')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">8</button>
+                    <button onclick="calcInput('9')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">9</button>
+                    <button onclick="calcInput('*')" style="padding: 15px; border: none; border-radius: 8px; background: #748ffc; color: white; font-size: 18px; cursor: pointer;">×</button>
+                    <button onclick="calcInput('4')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">4</button>
+                    <button onclick="calcInput('5')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">5</button>
+                    <button onclick="calcInput('6')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">6</button>
+                    <button onclick="calcInput('-')" style="padding: 15px; border: none; border-radius: 8px; background: #748ffc; color: white; font-size: 18px; cursor: pointer;">−</button>
+                    <button onclick="calcInput('1')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">1</button>
+                    <button onclick="calcInput('2')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">2</button>
+                    <button onclick="calcInput('3')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">3</button>
+                    <button onclick="calcInput('+')" style="padding: 15px; border: none; border-radius: 8px; background: #748ffc; color: white; font-size: 18px; cursor: pointer;">+</button>
+                    <button onclick="calcInput('0')" style="grid-column: span 2; padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">0</button>
+                    <button onclick="calcInput('.')" style="padding: 15px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer;">.</button>
+                    <button onclick="calcEquals()" style="padding: 15px; border: none; border-radius: 8px; background: #51cf66; color: white; font-size: 18px; cursor: pointer;">=</button>
                 </div>
             </div>
         </div>
+
+        <!-- Settings Window -->
+        <div class="window" id="window-settings" style="width: 500px; height: 400px; top: 150px; left: 350px;">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('settings')"></div>
+                    <div class="window-control minimize" onclick="minimizeWindow('settings')"></div>
+                </div>
+                <div class="window-title">⚙️ Paramètres</div>
+            </div>
+            <div class="window-content" style="padding: 20px;">
+                <h3 style="margin-bottom: 15px; color: #333;">Paramètres InfiOS</h3>
+                <div style="background: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <strong>Version:</strong> InfiOS Web v1.0.0<br>
+                    <strong>Kernel:</strong> InfiCore 2025.1<br>
+                    <strong>Shell:</strong> InfiShell 1.0
+                </div>
+                <div style="background: rgba(255,255,255,0.5); padding: 15px; border-radius: 8px;">
+                    <strong>Système de fichiers:</strong> InfiFS (virtuel)<br>
+                    <strong>Architecture:</strong> Web-based<br>
+                    <strong>Utilisateur:</strong> user
+                </div>
+            </div>
+            <div class="resize-handle"></div>
+        </div>
     </div>
 
-    <!-- Dock -->
     <div class="dock">
         <div class="dock-icon" onclick="openWindow('files')" id="dock-files">📁</div>
         <div class="dock-icon" onclick="openWindow('terminal')" id="dock-terminal">⌨️</div>
         <div class="dock-icon" onclick="openWindow('browser')" id="dock-browser">🌐</div>
-        <div class="dock-icon">⚙️</div>
-        <div class="dock-icon">💬</div>
-        <div class="dock-icon">🎵</div>
+        <div class="dock-icon" onclick="openWindow('editor')" id="dock-editor">📝</div>
+        <div class="dock-icon" onclick="openWindow('calculator')" id="dock-calculator">🔢</div>
+        <div class="dock-icon" onclick="openWindow('settings')" id="dock-settings">⚙️</div>
     </div>
 
     <script>
-        // Window Management
+        // ===== TERMINAL SYSTEM =====
+        class InfiShell {
+            constructor() {
+                this.currentPath = '/home/user';
+                this.history = [];
+                this.historyIndex = -1;
+                this.fileSystem = {
+                    '/': {
+                        'home': {
+                            'user': {
+                                'Documents': {
+                                    'readme.txt': 'Bienvenue sur InfiOS Web!\nCe système est entièrement fonctionnel.',
+                                    'notes.txt': 'Mes notes personnelles'
+                                },
+                                'Downloads': {},
+                                'Pictures': {
+                                    'photo.jpg': '[IMAGE]'
+                                },
+                                'Music': {}
+                            }
+                        },
+                        'etc': {
+                            'config.conf': 'InfiOS Configuration File'
+                        },
+                        'bin': {},
+                        'usr': {
+                            'bin': {},
+                            'local': {}
+                        }
+                    }
+                };
+                this.env = {
+                    USER: 'user',
+                    HOME: '/home/user',
+                    SHELL: '/bin/infishell',
+                    PATH: '/bin:/usr/bin:/usr/local/bin'
+                };
+            }
+
+            init() {
+                this.output = document.getElementById('terminal-output');
+                this.printWelcome();
+                this.createPrompt();
+            }
+
+            printWelcome() {
+                this.print('╔═══════════════════════════════════════════════╗', 'info');
+                this.print('║   InfiShell v1.0 - Terminal Avancé InfiOS   ║', 'info');
+                this.print('╚═══════════════════════════════════════════════╝', 'info');
+                this.print('');
+                this.print('Tapez "help" pour voir les commandes disponibles', 'success');
+                this.print('');
+            }
+
+            print(text, type = '') {
+                const line = document.createElement('div');
+                line.className = 'terminal-line';
+                if (type) line.classList.add('terminal-' + type);
+                line.textContent = text;
+                this.output.appendChild(line);
+                this.scrollToBottom();
+            }
+
+            createPrompt() {
+                const promptLine = document.createElement('div');
+                promptLine.className = 'terminal-input-line';
+                
+                const prompt = document.createElement('span');
+                prompt.className = 'terminal-prompt';
+                prompt.textContent = `user@infios:${this.currentPath}$ `;
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'terminal-input';
+                input.autocomplete = 'off';
+                
+                input.addEventListener('keydown', (e) => this.handleInput(e, input));
+                
+                promptLine.appendChild(prompt);
+                promptLine.appendChild(input);
+                this.output.appendChild(promptLine);
+                
+                input.focus();
+                this.scrollToBottom();
+            }
+
+            handleInput(e, input) {
+                if (e.key === 'Enter') {
+                    const cmd = input.value.trim();
+                    if (cmd) {
+                        this.history.push(cmd);
+                        this.historyIndex = this.history.length;
+                    }
+                    input.disabled = true;
+                    this.executeCommand(cmd);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (this.historyIndex > 0) {
+                        this.historyIndex--;
+                        input.value = this.history[this.historyIndex];
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (this.historyIndex < this.history.length - 1) {
+                        this.historyIndex++;
+                        input.value = this.history[this.historyIndex];
+                    } else {
+                        this.historyIndex = this.history.length;
+                        input.value = '';
+                    }
+                } else if (e.key === 'Tab') {
+                    e.preventDefault();
+                    this.autoComplete(input);
+                }
+            }
+
+            executeCommand(cmd) {
+                if (!cmd) {
+                    this.createPrompt();
+                    return;
+                }
+
+                const parts = cmd.trim().split(/\s+/);
+                const command = parts[0];
+                const args = parts.slice(1);
+
+                const commands = {
+                    help: () => this.cmdHelp(),
+                    clear: () => this.cmdClear(),
+                    ls: () => this.cmdLs(args),
+                    cd: () => this.cmdCd(args),
+                    pwd: () => this.cmdPwd(),
+                    mkdir: () => this.cmdMkdir(args),
+                    touch: () => this.cmdTouch(args),
+                    cat: () => this.cmdCat(args),
+                    echo: () => this.cmdEcho(args),
+                    rm: () => this.cmdRm(args),
+                    mv: () => this.cmdMv(args),
+                    cp: () => this.cmdCp(args),
+                    date: () => this.cmdDate(),
+                    whoami: () => this.cmdWhoami(),
+                    uname: () => this.cmdUname(args),
+                    env: () => this.cmdEnv(),
+                    history: () => this.cmdHistory(),
+                    tree: () => this.cmdTree(args),
+                    neofetch: () => this.cmdNeofetch(),
+                    calc: () => this.cmdCalc(args),
+                    write: () => this.cmdWrite(args),
+                    find: () => this.cmdFind(args)
+                };
+
+                if (commands[command]) {
+                    commands[command]();
+                } else {
+                    this.print(`infishell: commande introuvable: ${command}`, 'error');
+                    this.print(`Tapez 'help' pour voir les commandes disponibles`, 'info');
+                }
+
+                this.createPrompt();
+            }
+
+            cmdHelp() {
+                this.print('Commandes disponibles:', 'info');
+                this.print('');
+                this.print('  Navigation:', 'success');
+                this.print('    ls [dir]         - Liste les fichiers et dossiers');
+                this.print('    cd <dir>         - Change de répertoire');
+                this.print('    pwd              - Affiche le répertoire courant');
+                this.print('    tree [dir]       - Affiche l\'arborescence');
+                this.print('');
+                this.print('  Fichiers:', 'success');
+                this.print('    cat <file>       - Affiche le contenu d\'un fichier');
+                this.print('    touch <file>     - Crée un fichier vide');
+                this.print('    mkdir <dir>      - Crée un répertoire');
+                this.print('    rm <name>        - Supprime un fichier/dossier');
+                this.print('    mv <src> <dst>   - Déplace/renomme');
+                this.print('    cp <src> <dst>   - Copie un fichier');
+                this.print('    write <file>     - Écrit dans un fichier');
+                this.print('    find <name>      - Recherche un fichier');
+                this.print('');
+                this.print('  Système:', 'success');
+                this.print('    clear            - Efface l\'écran');
+                this.print('    date             - Affiche la date et l\'heure');
+                this.print('    whoami           - Affiche l\'utilisateur');
+                this.print('    uname [-a]       - Infos système');
+                this.print('    env              - Variables d\'environnement');
+                this.print('    history          - Historique des commandes');
+                this.print('    neofetch         - Infos système stylisées');
+                this.print('');
+                this.print('  Utilitaires:', 'success');
+                this.print('    echo <text>      - Affiche du texte');
+                this.print('    calc <expr>      - Calculatrice (ex: calc 5+3*2)');
+                this.print('    help             - Affiche cette aide');
+            }
+
+            cmdClear() {
+                this.output.innerHTML = '';
+            }
+
+            cmdLs(args) {
+                const path = args[0] ? this.resolvePath(args[0]) : this.currentPath;
+                const dir = this.getNode(path);
+                
+                if (!dir) {
+                    this.print(`ls: impossible d'accéder à '${args[0]}': Aucun fichier ou dossier`, 'error');
+                    return;
+                }
+                
+                if (typeof dir === 'string') {
+                    this.print(`ls: ${args[0]}: N'est pas un répertoire`, 'error');
+                    return;
+                }
+
+                const entries = Object.keys(dir);
+                if (entries.length === 0) {
+                    this.print('(vide)');
+                    return;
+                }
+
+                entries.forEach(name => {
+                    const isDir = typeof dir[name] === 'object';
+                    const color = isDir ? 'info' : '';
+                    this.print(`  ${isDir ? '📁' : '📄'} ${name}`, color);
+                });
+            }
+
+            cmdCd(args) {
+                if (!args[0]) {
+                    this.currentPath = this.env.HOME;
+                    return;
+                }
+
+                const newPath = this.resolvePath(args[0]);
+                const node = this.getNode(newPath);
+
+                if (!node) {
+                    this.print(`cd: ${args[0]}: Aucun fichier ou dossier de ce type`, 'error');
+                    return;
+                }
+
+                if (typeof node === 'string') {
+                    this.print(`cd: ${args[0]}: N'est pas un répertoire`, 'error');
+                    return;
+                }
+
+                this.currentPath = newPath;
+            }
+
+            cmdPwd() {
+                this.print(this.currentPath);
+            }
+
+            cmdMkdir(args) {
+                if (!args[0]) {
+                    this.print('mkdir: argument manquant', 'error');
+                    return;
+                }
+
+                const path = this.resolvePath(args[0]);
+                const parentPath = path.substring(0, path.lastIndexOf('/')) || '/';
+                const name = path.substring(path.lastIndexOf('/') + 1);
+                const parent = this.getNode(parentPath);
+
+                if (!parent || typeof parent === 'string') {
+                    this.print(`mkdir: impossible de créer le répertoire '${args[0]}'`, 'error');
+                    return;
+                }
+
+                if (parent[name]) {
+                    this.print(`mkdir: impossible de créer le répertoire '${args[0]}': Le fichier existe`, 'error');
+                    return;
+                }
+
+                parent[name] = {};
+                this.print(`Répertoire '${args[0]}' créé`, 'success');
+            }
+
+            cmdTouch(args) {
+                if (!args[0]) {
+                    this.print('touch: argument manquant', 'error');
+                    return;
+                }
+
+                const path = this.resolvePath(args[0]);
+                const parentPath = path.substring(0, path.lastIndexOf('/')) || '/';
+                const name = path.substring(path.lastIndexOf('/') + 1);
+                const parent = this.getNode(parentPath);
+
+                if (!parent || typeof parent === 'string') {
+                    this.print(`touch: impossible de créer '${args[0]}'`, 'error');
+                    return;
+                }
+
+                if (!parent[name]) {
+                    parent[name] = '';
+                    this.print(`Fichier '${args[0]}' créé`, 'success');
+                }
+            }
+
+            cmdCat(args) {
+                if (!args[0]) {
+                    this.print('cat: argument manquant', 'error');
+                    return;
+                }
+
+                const path = this.resolvePath(args[0]);
+                const file = this.getNode(path);
+
+                if (!file) {
+                    this.print(`cat: ${args[0]}: Aucun fichier ou dossier de ce type`, 'error');
+                    return;
+                }
+
+                if (typeof file === 'object') {
+                    this.print(`cat: ${args[0]}: Est un répertoire`, 'error');
+                    return;
+                }
+
+                file.split('\n').forEach(line => this.print(line));
+            }
+
+            cmdEcho(args) {
+                this.print(args.join(' '));
+            }
+
+            cmdRm(args) {
+                if (!args[0]) {
+                    this.print('rm: argument manquant', 'error');
+                    return;
+                }
+
+                const path = this.resolvePath(args[0]);
+                const parentPath = path.substring(0, path.lastIndexOf('/')) || '/';
+                const name = path.substring(path.lastIndexOf('/') + 1);
+                const parent = this.getNode(parentPath);
+
+                if (!parent || !parent[name]) {
+                    this.print(`rm: impossible de supprimer '${args[0]}'`, 'error');
+                    return;
+                }
+
+                delete parent[name];
+                this.print(`'${args[0]}' supprimé`, 'success');
+            }
+
+            cmdMv(args) {
+                if (args.length < 2) {
+                    this.print('mv: arguments manquants', 'error');
+                    return;
+                }
+
+                const srcPath = this.resolvePath(args[0]);
+                const dstPath = this.resolvePath(args[1]);
+                const src = this.getNode(srcPath);
+
+                if (!src) {
+                    this.print(`mv: impossible d'accéder à '${args[0]}'`, 'error');
+                    return;
+                }
+
+                const srcParentPath = srcPath.substring(0, srcPath.lastIndexOf('/')) || '/';
+                const srcName = srcPath.substring(srcPath.lastIndexOf('/') + 1);
+                const srcParent = this.getNode(srcParentPath);
+
+                const dstParentPath = dstPath.substring(0, dstPath.lastIndexOf('/')) || '/';
+                const dstName = dstPath.substring(dstPath.lastIndexOf('/') + 1);
+                const dstParent = this.getNode(dstParentPath);
+
+                if (!dstParent || typeof dstParent === 'string') {
+                    this.print(`mv: impossible de déplacer vers '${args[1]}'`, 'error');
+                    return;
+                }
+
+                dstParent[dstName] = src;
+                delete srcParent[srcName];
+                this.print(`'${args[0]}' → '${args[1]}'`, 'success');
+            }
+
+            cmdCp(args) {
+                if (args.length < 2) {
+                    this.print('cp: arguments manquants', 'error');
+                    return;
+                }
+
+                const srcPath = this.resolvePath(args[0]);
+                const dstPath = this.resolvePath(args[1]);
+                const src = this.getNode(srcPath);
+
+                if (!src) {
+                    this.print(`cp: impossible d'accéder à '${args[0]}'`, 'error');
+                    return;
+                }
+
+                if (typeof src === 'object') {
+                    this.print('cp: copie de répertoires non supportée', 'error');
+                    return;
+                }
+
+                const dstParentPath = dstPath.substring(0, dstPath.lastIndexOf('/')) || '/';
+                const dstName = dstPath.substring(dstPath.lastIndexOf('/') + 1);
+                const dstParent = this.getNode(dstParentPath);
+
+                if (!dstParent || typeof dstParent === 'string') {
+                    this.print(`cp: impossible de copier vers '${args[1]}'`, 'error');
+                    return;
+                }
+
+                dstParent[dstName] = src;
+                this.print(`'${args[0]}' copié vers '${args[1]}'`, 'success');
+            }
+
+            cmdDate() {
+                const now = new Date();
+                this.print(now.toString());
+            }
+
+            cmdWhoami() {
+                this.print(this.env.USER);
+            }
+
+            cmdUname(args) {
+                if (args[0] === '-a') {
+                    this.print('InfiOS WebCore 2025.1 #1 SMP Mon Sep 29 2025 x86_64 GNU/InfiOS');
+                } else {
+                    this.print('InfiOS');
+                }
+            }
+
+            cmdEnv() {
+                Object.keys(this.env).forEach(key => {
+                    this.print(`${key}=${this.env[key]}`, 'info');
+                });
+            }
+
+            cmdHistory() {
+                this.history.forEach((cmd, i) => {
+                    this.print(`  ${i + 1}  ${cmd}`);
+                });
+            }
+
+            cmdTree(args) {
+                const path = args[0] ? this.resolvePath(args[0]) : this.currentPath;
+                const node = this.getNode(path);
+
+                if (!node) {
+                    this.print(`tree: ${args[0]}: Aucun fichier ou dossier`, 'error');
+                    return;
+                }
+
+                if (typeof node === 'string') {
+                    this.print(`tree: ${args[0]}: N'est pas un répertoire`, 'error');
+                    return;
+                }
+
+                this.print(path, 'info');
+                this.printTree(node, '');
+            }
+
+            printTree(node, prefix) {
+                const entries = Object.keys(node);
+                entries.forEach((name, i) => {
+                    const isLast = i === entries.length - 1;
+                    const branch = isLast ? '└── ' : '├── ';
+                    const isDir = typeof node[name] === 'object';
+                    
+                    this.print(`${prefix}${branch}${isDir ? '📁' : '📄'} ${name}`, isDir ? 'info' : '');
+                    
+                    if (isDir) {
+                        const newPrefix = prefix + (isLast ? '    ' : '│   ');
+                        this.printTree(node[name], newPrefix);
+                    }
+                });
+            }
+
+            cmdNeofetch() {
+                this.print('');
+                this.print('     ╔═══════════╗        user@infios', 'info');
+                this.print('     ║  InfiOS   ║        ─────────────', 'info');
+                this.print('     ║   Web     ║        OS: InfiOS Web v1.0', 'info');
+                this.print('     ╚═══════════╝        Kernel: InfiCore 2025.1', 'info');
+                this.print('                          Shell: InfiShell 1.0', 'info');
+                this.print('     ∞  ∞  ∞  ∞  ∞       Terminal: InfiShell', 'info');
+                this.print('                          CPU: WebCore (8 threads)', 'info');
+                this.print('                          Memory: Unlimited', 'info');
+                this.print('                          Storage: Virtual InfiFS', 'info');
+                this.print('');
+            }
+
+            cmdCalc(args) {
+                if (!args[0]) {
+                    this.print('calc: expression manquante', 'error');
+                    return;
+                }
+
+                try {
+                    const expr = args.join(' ');
+                    const result = eval(expr);
+                    this.print(`= ${result}`, 'success');
+                } catch (e) {
+                    this.print(`calc: erreur de calcul`, 'error');
+                }
+            }
+
+            cmdWrite(args) {
+                if (args.length < 2) {
+                    this.print('write: usage: write <fichier> <contenu...>', 'error');
+                    return;
+                }
+
+                const filename = args[0];
+                const content = args.slice(1).join(' ');
+                const path = this.resolvePath(filename);
+                const parentPath = path.substring(0, path.lastIndexOf('/')) || '/';
+                const name = path.substring(path.lastIndexOf('/') + 1);
+                const parent = this.getNode(parentPath);
+
+                if (!parent || typeof parent === 'string') {
+                    this.print(`write: impossible d'écrire dans '${filename}'`, 'error');
+                    return;
+                }
+
+                parent[name] = content;
+                this.print(`Contenu écrit dans '${filename}'`, 'success');
+            }
+
+            cmdFind(args) {
+                if (!args[0]) {
+                    this.print('find: nom de fichier manquant', 'error');
+                    return;
+                }
+
+                const name = args[0];
+                const results = [];
+                this.findInNode(this.fileSystem['/'], '/', name, results);
+
+                if (results.length === 0) {
+                    this.print(`Aucun fichier trouvé: ${name}`, 'warning');
+                } else {
+                    this.print(`Fichiers trouvés (${results.length}):`, 'success');
+                    results.forEach(path => this.print(`  ${path}`));
+                }
+            }
+
+            findInNode(node, path, name, results) {
+                Object.keys(node).forEach(key => {
+                    const fullPath = path === '/' ? '/' + key : path + '/' + key;
+                    if (key === name) {
+                        results.push(fullPath);
+                    }
+                    if (typeof node[key] === 'object') {
+                        this.findInNode(node[key], fullPath, name, results);
+                    }
+                });
+            }
+
+            resolvePath(path) {
+                if (path.startsWith('/')) {
+                    return path;
+                }
+                
+                if (path === '..') {
+                    return this.currentPath.substring(0, this.currentPath.lastIndexOf('/')) || '/';
+                }
+                
+                if (path === '.') {
+                    return this.currentPath;
+                }
+                
+                return this.currentPath === '/' ? '/' + path : this.currentPath + '/' + path;
+            }
+
+            getNode(path) {
+                if (path === '/') return this.fileSystem['/'];
+                
+                const parts = path.split('/').filter(p => p);
+                let node = this.fileSystem['/'];
+                
+                for (let part of parts) {
+                    if (node && typeof node === 'object' && node[part] !== undefined) {
+                        node = node[part];
+                    } else {
+                        return null;
+                    }
+                }
+                
+                return node;
+            }
+
+            autoComplete(input) {
+                const value = input.value;
+                const parts = value.split(' ');
+                const lastPart = parts[parts.length - 1];
+                
+                const currentDir = this.getNode(this.currentPath);
+                if (!currentDir || typeof currentDir === 'string') return;
+                
+                const matches = Object.keys(currentDir).filter(name => 
+                    name.startsWith(lastPart)
+                );
+                
+                if (matches.length === 1) {
+                    parts[parts.length - 1] = matches[0];
+                    input.value = parts.join(' ');
+                } else if (matches.length > 1) {
+                    this.print('');
+                    this.print(matches.join('  '), 'info');
+                }
+            }
+
+            scrollToBottom() {
+                this.output.scrollTop = this.output.scrollHeight;
+            }
+        }
+
+        // ===== WINDOW MANAGEMENT =====
         let zIndex = 10;
         const activeWindows = new Set();
+        const minimizedWindows = new Set();
+        let shell;
 
         function openWindow(id) {
             const win = document.getElementById('window-' + id);
             win.classList.add('active');
             win.style.zIndex = ++zIndex;
             activeWindows.add(id);
+            minimizedWindows.delete(id);
             updateDockIcons();
+            
+            if (id === 'terminal' && !shell) {
+                shell = new InfiShell();
+                shell.init();
+            }
+            
+            if (id === 'files') {
+                loadFiles();
+            }
         }
 
         function closeWindow(id) {
             const win = document.getElementById('window-' + id);
             win.classList.remove('active');
             activeWindows.delete(id);
+            minimizedWindows.delete(id);
             updateDockIcons();
         }
 
+        function minimizeWindow(id) {
+            const win = document.getElementById('window-' + id);
+            win.style.display = 'none';
+            minimizedWindows.add(id);
+            updateDockIcons();
+        }
+
+        function maximizeWindow(id) {
+            const win = document.getElementById('window-' + id);
+            if (win.dataset.maximized === 'true') {
+                win.style.width = win.dataset.oldWidth;
+                win.style.height = win.dataset.oldHeight;
+                win.style.top = win.dataset.oldTop;
+                win.style.left = win.dataset.oldLeft;
+                win.dataset.maximized = 'false';
+            } else {
+                win.dataset.oldWidth = win.style.width;
+                win.dataset.oldHeight = win.style.height;
+                win.dataset.oldTop = win.style.top;
+                win.dataset.oldLeft = win.style.left;
+                win.style.width = '100%';
+                win.style.height = 'calc(100vh - 40px)';
+                win.style.top = '40px';
+                win.style.left = '0';
+                win.dataset.maximized = 'true';
+            }
+        }
+
         function updateDockIcons() {
-            ['files', 'terminal', 'browser'].forEach(id => {
+            ['files', 'terminal', 'browser', 'editor', 'calculator', 'settings'].forEach(id => {
                 const dockIcon = document.getElementById('dock-' + id);
-                if (activeWindows.has(id)) {
-                    dockIcon.classList.add('active');
-                } else {
-                    dockIcon.classList.remove('active');
+                if (dockIcon) {
+                    if (activeWindows.has(id) || minimizedWindows.has(id)) {
+                        dockIcon.classList.add('active');
+                    } else {
+                        dockIcon.classList.remove('active');
+                    }
+                    
+                    dockIcon.onclick = () => {
+                        if (minimizedWindows.has(id)) {
+                            const win = document.getElementById('window-' + id);
+                            win.style.display = 'flex';
+                            win.style.zIndex = ++zIndex;
+                            minimizedWindows.delete(id);
+                            updateDockIcons();
+                        } else {
+                            openWindow(id);
+                        }
+                    };
                 }
             });
         }
 
-        // Draggable Windows
+        // ===== DRAGGABLE WINDOWS =====
         document.querySelectorAll('.window').forEach(win => {
             const header = win.querySelector('.window-header');
             let isDragging = false;
@@ -547,85 +1392,215 @@
             document.addEventListener('mouseup', () => {
                 isDragging = false;
             });
-        });
 
-        // Terminal Functionality
-        const terminalInput = document.getElementById('terminal-input');
-        const terminalOutput = document.getElementById('terminal-output');
+            // Resizable
+            const resizeHandle = win.querySelector('.resize-handle');
+            if (resizeHandle) {
+                let isResizing = false;
+                let startX, startY, startWidth, startHeight;
 
-        terminalInput.addEventListener('keydown', e => {
-            if (e.key === 'Enter') {
-                const cmd = terminalInput.value.trim();
-                executeCommand(cmd);
-                terminalInput.value = '';
+                resizeHandle.addEventListener('mousedown', e => {
+                    isResizing = true;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startWidth = parseInt(window.getComputedStyle(win).width);
+                    startHeight = parseInt(window.getComputedStyle(win).height);
+                    e.stopPropagation();
+                });
+
+                document.addEventListener('mousemove', e => {
+                    if (!isResizing) return;
+                    const width = startWidth + e.clientX - startX;
+                    const height = startHeight + e.clientY - startY;
+                    win.style.width = Math.max(400, width) + 'px';
+                    win.style.height = Math.max(300, height) + 'px';
+                });
+
+                document.addEventListener('mouseup', () => {
+                    isResizing = false;
+                });
             }
         });
 
-        function executeCommand(cmd) {
-            const line = document.createElement('div');
-            line.className = 'terminal-line';
-            line.innerHTML = `<span class="terminal-prompt">user@infios:~$</span> ${cmd}`;
+        // ===== FILES SYSTEM =====
+        function loadFiles() {
+            if (!shell) return;
             
-            const response = document.createElement('div');
-            response.className = 'terminal-line';
+            const grid = document.getElementById('files-grid');
+            grid.innerHTML = '';
             
-            if (cmd === 'help') {
-                response.textContent = 'Available commands: help, clear, ls, date, echo, neofetch';
-            } else if (cmd === 'clear') {
-                terminalOutput.innerHTML = '';
-                addPrompt();
-                return;
-            } else if (cmd === 'ls') {
-                response.textContent = 'Documents  Downloads  Pictures  Music  Videos';
-            } else if (cmd === 'date') {
-                response.textContent = new Date().toString();
-            } else if (cmd.startsWith('echo ')) {
-                response.textContent = cmd.substring(5);
-            } else if (cmd === 'neofetch') {
-                response.innerHTML = `<span style="color: #00aaff;">OS:</span> InfiOS Web v1.0<br><span style="color: #00aaff;">Kernel:</span> WebCore 5.0<br><span style="color: #00aaff;">Shell:</span> infsh`;
-            } else if (cmd !== '') {
-                response.textContent = `Command not found: ${cmd}`;
-            }
+            const currentDir = shell.getNode(shell.currentPath);
+            if (!currentDir || typeof currentDir === 'string') return;
             
-            terminalOutput.insertBefore(response, terminalOutput.lastElementChild);
-            terminalOutput.insertBefore(line, response);
-            addPrompt();
-        }
-
-        function addPrompt() {
-            const newPrompt = document.createElement('div');
-            newPrompt.className = 'terminal-line';
-            newPrompt.innerHTML = '<span class="terminal-prompt">user@infios:~$</span> <input type="text" class="terminal-input" autocomplete="off">';
-            
-            terminalOutput.removeChild(terminalOutput.lastElementChild);
-            terminalOutput.appendChild(newPrompt);
-            
-            const newInput = newPrompt.querySelector('.terminal-input');
-            newInput.focus();
-            newInput.addEventListener('keydown', e => {
-                if (e.key === 'Enter') {
-                    executeCommand(newInput.value.trim());
-                }
+            Object.keys(currentDir).forEach(name => {
+                const isDir = typeof currentDir[name] === 'object';
+                const fileEl = document.createElement('div');
+                fileEl.className = 'file-item';
+                fileEl.innerHTML = `
+                    <div class="file-icon">${isDir ? '📁' : '📄'}</div>
+                    <div class="file-name">${name}</div>
+                `;
+                fileEl.ondblclick = () => {
+                    if (isDir) {
+                        shell.currentPath = shell.resolvePath(name);
+                        document.getElementById('current-path').textContent = shell.currentPath;
+                        loadFiles();
+                    }
+                };
+                grid.appendChild(fileEl);
             });
         }
 
-        // Auto-focus terminal when opened
-        document.getElementById('dock-terminal').addEventListener('click', () => {
-            setTimeout(() => {
-                const input = document.querySelector('#window-terminal .terminal-input');
-                if (input) input.focus();
-            }, 100);
-        });
+        function fileNavigateBack() {
+            if (!shell) return;
+            if (shell.currentPath !== '/') {
+                shell.currentPath = shell.currentPath.substring(0, shell.currentPath.lastIndexOf('/')) || '/';
+                document.getElementById('current-path').textContent = shell.currentPath;
+                loadFiles();
+            }
+        }
 
-        // Clock Update
+        function fileNavigateForward() {}
+        function fileRefresh() { loadFiles(); }
+
+        // ===== BROWSER =====
+        let browserHistory = [];
+        let browserHistoryIndex = -1;
+
+        function browserNavigate() {
+            const url = document.getElementById('url-bar').value;
+            if (!url) return;
+            
+            document.getElementById('browser-content').innerHTML = `
+                <h2 style="margin-bottom: 20px;">🌐 ${url}</h2>
+                <p style="color: #999;">Simulation de navigation</p>
+                <p style="margin-top: 20px; font-size: 14px;">InfiBrowser - Navigation web intégrée</p>
+            `;
+            
+            browserHistory.push(url);
+            browserHistoryIndex = browserHistory.length - 1;
+        }
+
+        function browserBack() {
+            if (browserHistoryIndex > 0) {
+                browserHistoryIndex--;
+                document.getElementById('url-bar').value = browserHistory[browserHistoryIndex];
+                browserNavigate();
+            }
+        }
+
+        function browserForward() {
+            if (browserHistoryIndex < browserHistory.length - 1) {
+                browserHistoryIndex++;
+                document.getElementById('url-bar').value = browserHistory[browserHistoryIndex];
+                browserNavigate();
+            }
+        }
+
+        function browserRefresh() {
+            browserNavigate();
+        }
+
+        // ===== TEXT EDITOR =====
+        function editorNew() {
+            document.getElementById('editor-text').value = '';
+        }
+
+        function editorSave() {
+            const content = document.getElementById('editor-text').value;
+            alert('Fichier enregistré!\n\nContenu:\n' + content.substring(0, 100) + '...');
+        }
+
+        function editorClear() {
+            if (confirm('Effacer tout le contenu?')) {
+                editorNew();
+            }
+        }
+
+        // ===== CALCULATOR =====
+        let calcExpression = '0';
+
+        function calcInput(val) {
+            if (calcExpression === '0' && val !== '.') {
+                calcExpression = val;
+            } else {
+                calcExpression += val;
+            }
+            document.getElementById('calc-display').textContent = calcExpression;
+        }
+
+        function calcClear() {
+            calcExpression = '0';
+            document.getElementById('calc-display').textContent = calcExpression;
+        }
+
+        function calcBackspace() {
+            if (calcExpression.length > 1) {
+                calcExpression = calcExpression.slice(0, -1);
+            } else {
+                calcExpression = '0';
+            }
+            document.getElementById('calc-display').textContent = calcExpression;
+        }
+
+        function calcEquals() {
+            try {
+                const result = eval(calcExpression);
+                calcExpression = String(result);
+                document.getElementById('calc-display').textContent = calcExpression;
+            } catch (e) {
+                document.getElementById('calc-display').textContent = 'Erreur';
+                calcExpression = '0';
+            }
+        }
+
+        // ===== ABOUT DIALOG =====
+        function showAbout() {
+            alert('InfiOS Web v1.0.0\n\nSystème d\'exploitation web futuriste\nConçu pour être puissant, élégant et fonctionnel\n\n© 2025 InfiOS Project');
+        }
+
+        // ===== CLOCK UPDATE =====
         function updateClock() {
             const now = new Date();
             const time = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
             const date = now.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-            document.querySelector('.top-bar-right span').textContent = `${date} ${time}`;
+            document.getElementById('clock').textContent = `${date} ${time}`;
         }
+        
         setInterval(updateClock, 1000);
         updateClock();
+
+        // ===== KEYBOARD SHORTCUTS =====
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Alt+T pour ouvrir le terminal
+            if (e.ctrlKey && e.altKey && e.key === 't') {
+                e.preventDefault();
+                openWindow('terminal');
+            }
+            // Ctrl+Alt+F pour ouvrir les fichiers
+            if (e.ctrlKey && e.altKey && e.key === 'f') {
+                e.preventDefault();
+                openWindow('files');
+            }
+            // Ctrl+Alt+B pour ouvrir le navigateur
+            if (e.ctrlKey && e.altKey && e.key === 'b') {
+                e.preventDefault();
+                openWindow('browser');
+            }
+            // Ctrl+Alt+E pour ouvrir l'éditeur
+            if (e.ctrlKey && e.altKey && e.key === 'e') {
+                e.preventDefault();
+                openWindow('editor');
+            }
+        });
+
+        // ===== INITIALIZE =====
+        console.log('InfiOS Web v1.0.0 - System Ready');
+        console.log('Raccourcis clavier:');
+        console.log('  Ctrl+Alt+T : Terminal');
+        console.log('  Ctrl+Alt+F : Fichiers');
+        console.log('  Ctrl+Alt+B : Navigateur');
+        console.log('  Ctrl+Alt+E : Éditeur');
     </script>
 </body>
 </html>
