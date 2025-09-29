@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfiOS Web – Vision V1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3), transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(138, 192, 255, 0.3), transparent 50%);
+            animation: drift 20s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* Desktop */
+        .desktop {
+            position: relative;
+            width: 100%;
+            height: calc(100% - 80px);
+            padding: 20px;
+            z-index: 1;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+
+        .top-bar-left {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .os-logo {
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-item {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .menu-item:hover {
+            color: white;
+        }
+
+        .top-bar-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            color: white;
+            font-size: 13px;
+        }
+
+        .status-icon {
+            width: 18px;
+            height: 18px;
+            opacity: 0.9;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .status-icon:hover {
+            opacity: 1;
+        }
+
+        /* Desktop Icons */
+        .desktop-icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 80px);
+            gap: 20px;
+            padding-top: 50px;
+        }
+
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .desktop-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .icon-image {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-label {
+            color: white;
+            font-size: 12px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Windows */
+        .window {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(40px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+        }
+
+        .window.active {
+            display: flex;
+            animation: windowAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes windowAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .window-header {
+            height: 45px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            cursor: move;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .window-control:hover {
+            transform: scale(1.1);
+        }
+
+        .window-control.close { background: #ff5f57; }
+        .window-control.minimize { background: #ffbd2e; }
+        .window-control.maximize { background: #28ca42; }
+
+        .window-title {
+            margin-left: 15px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .window-content {
+            flex: 1;
+            overflow: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Terminal */
+        .terminal-content {
+            background: rgba(0, 0, 0, 0.85);
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .terminal-line {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+
+        .terminal-prompt {
+            color: #00aaff;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            outline: none;
+            width: calc(100% - 80px);
+        }
+
+        /* Browser */
+        .browser-bar {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            align-items: center;
+        }
+
+        .url-bar {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .browser-iframe {
+            width: 100%;
+            height: calc(100% - 50px);
+            border: none;
+        }
+
+        /* Dock */
+        .dock {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 10px 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .dock-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+        }
+
+        .dock-icon:hover {
+            transform: translateY(-10px) scale(1.1);
+        }
+
+        .dock-icon.active::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Files Explorer */
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+        }
+
+        .file-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .file-item:hover {
+            background: rgba(100, 100, 255, 0.1);
+        }
+
+        .file-icon {
+            font-size: 40px;
+        }
+
+        .file-name {
+            font-size: 12px;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="os-logo">∞ InfiOS</div>
+            <div class="menu-item">Fichier</div>
+            <div class="menu-item">Édition</div>
+            <div class="menu-item">Affichage</div>
+        </div>
+        <div class="top-bar-right">
+            <span>29 Sep 15:42</span>
+            <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 8l6 6 6-6"/>
+                <path d="M12 2v12"/>
+            </svg>
+            <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M2 12h20"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Desktop -->
+    <div class="desktop">
+        <div class="desktop-icons">
+            <div class="desktop-icon" onclick="openWindow('files')">
+                <div class="icon-image">📁</div>
+                <div class="icon-label">Fichiers</div>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('terminal')">
+                <div class="icon-image">⌨️</div>
+                <div class="icon-label">Terminal</div>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('browser')">
+                <div class="icon-image">🌐</div>
+                <div class="icon-label">Navigateur</div>
+            </div>
+        </div>
+
+        <!-- Files Window -->
+        <div class="window" id="window-files" style="width: 600px; height: 400px; top: 80px; left: 100px;">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('files')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">📁 Explorateur de fichiers</div>
+            </div>
+            <div class="window-content">
+                <div class="files-grid">
+                    <div class="file-item">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">Document.txt</div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">🖼️</div>
+                        <div class="file-name">Image.png</div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">🎵</div>
+                        <div class="file-name">Musique.mp3</div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">📦</div>
+                        <div class="file-name">Archive.zip</div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">💻</div>
+                        <div class="file-name">Code.js</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal Window -->
+        <div class="window" id="window-terminal" style="width: 700px; height: 450px; top: 120px; left: 200px;">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('terminal')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">⌨️ Terminal InfiOS</div>
+            </div>
+            <div class="window-content" style="padding: 0;">
+                <div class="terminal-content" id="terminal-output">
+                    <div class="terminal-line">InfiOS Web Terminal v1.0.0</div>
+                    <div class="terminal-line">Type 'help' for available commands</div>
+                    <div class="terminal-line"></div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">user@infios:~$</span>
+                        <input type="text" class="terminal-input" id="terminal-input" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Browser Window -->
+        <div class="window" id="window-browser" style="width: 900px; height: 600px; top: 70px; left: 250px;">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control close" onclick="closeWindow('browser')"></div>
+                    <div class="window-control minimize"></div>
+                    <div class="window-control maximize"></div>
+                </div>
+                <div class="window-title">🌐 Navigateur Web</div>
+            </div>
+            <div class="window-content" style="padding: 0;">
+                <div class="browser-bar">
+                    <input type="text" class="url-bar" placeholder="https://example.com" value="about:blank">
+                </div>
+                <div style="padding: 40px; text-align: center; color: #666;">
+                    <h2 style="margin-bottom: 20px;">Bienvenue sur InfiOS Web</h2>
+                    <p>Navigateur intégré - Tapez une URL pour commencer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dock -->
+    <div class="dock">
+        <div class="dock-icon" onclick="openWindow('files')" id="dock-files">📁</div>
+        <div class="dock-icon" onclick="openWindow('terminal')" id="dock-terminal">⌨️</div>
+        <div class="dock-icon" onclick="openWindow('browser')" id="dock-browser">🌐</div>
+        <div class="dock-icon">⚙️</div>
+        <div class="dock-icon">💬</div>
+        <div class="dock-icon">🎵</div>
+    </div>
+
+    <script>
+        // Window Management
+        let zIndex = 10;
+        const activeWindows = new Set();
+
+        function openWindow(id) {
+            const win = document.getElementById('window-' + id);
+            win.classList.add('active');
+            win.style.zIndex = ++zIndex;
+            activeWindows.add(id);
+            updateDockIcons();
+        }
+
+        function closeWindow(id) {
+            const win = document.getElementById('window-' + id);
+            win.classList.remove('active');
+            activeWindows.delete(id);
+            updateDockIcons();
+        }
+
+        function updateDockIcons() {
+            ['files', 'terminal', 'browser'].forEach(id => {
+                const dockIcon = document.getElementById('dock-' + id);
+                if (activeWindows.has(id)) {
+                    dockIcon.classList.add('active');
+                } else {
+                    dockIcon.classList.remove('active');
+                }
+            });
+        }
+
+        // Draggable Windows
+        document.querySelectorAll('.window').forEach(win => {
+            const header = win.querySelector('.window-header');
+            let isDragging = false;
+            let currentX, currentY, initialX, initialY;
+
+            header.addEventListener('mousedown', e => {
+                if (e.target.classList.contains('window-control')) return;
+                isDragging = true;
+                win.style.zIndex = ++zIndex;
+                initialX = e.clientX - win.offsetLeft;
+                initialY = e.clientY - win.offsetTop;
+            });
+
+            document.addEventListener('mousemove', e => {
+                if (!isDragging) return;
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                win.style.left = currentX + 'px';
+                win.style.top = currentY + 'px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+        });
+
+        // Terminal Functionality
+        const terminalInput = document.getElementById('terminal-input');
+        const terminalOutput = document.getElementById('terminal-output');
+
+        terminalInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                const cmd = terminalInput.value.trim();
+                executeCommand(cmd);
+                terminalInput.value = '';
+            }
+        });
+
+        function executeCommand(cmd) {
+            const line = document.createElement('div');
+            line.className = 'terminal-line';
+            line.innerHTML = `<span class="terminal-prompt">user@infios:~$</span> ${cmd}`;
+            
+            const response = document.createElement('div');
+            response.className = 'terminal-line';
+            
+            if (cmd === 'help') {
+                response.textContent = 'Available commands: help, clear, ls, date, echo, neofetch';
+            } else if (cmd === 'clear') {
+                terminalOutput.innerHTML = '';
+                addPrompt();
+                return;
+            } else if (cmd === 'ls') {
+                response.textContent = 'Documents  Downloads  Pictures  Music  Videos';
+            } else if (cmd === 'date') {
+                response.textContent = new Date().toString();
+            } else if (cmd.startsWith('echo ')) {
+                response.textContent = cmd.substring(5);
+            } else if (cmd === 'neofetch') {
+                response.innerHTML = `<span style="color: #00aaff;">OS:</span> InfiOS Web v1.0<br><span style="color: #00aaff;">Kernel:</span> WebCore 5.0<br><span style="color: #00aaff;">Shell:</span> infsh`;
+            } else if (cmd !== '') {
+                response.textContent = `Command not found: ${cmd}`;
+            }
+            
+            terminalOutput.insertBefore(response, terminalOutput.lastElementChild);
+            terminalOutput.insertBefore(line, response);
+            addPrompt();
+        }
+
+        function addPrompt() {
+            const newPrompt = document.createElement('div');
+            newPrompt.className = 'terminal-line';
+            newPrompt.innerHTML = '<span class="terminal-prompt">user@infios:~$</span> <input type="text" class="terminal-input" autocomplete="off">';
+            
+            terminalOutput.removeChild(terminalOutput.lastElementChild);
+            terminalOutput.appendChild(newPrompt);
+            
+            const newInput = newPrompt.querySelector('.terminal-input');
+            newInput.focus();
+            newInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') {
+                    executeCommand(newInput.value.trim());
+                }
+            });
+        }
+
+        // Auto-focus terminal when opened
+        document.getElementById('dock-terminal').addEventListener('click', () => {
+            setTimeout(() => {
+                const input = document.querySelector('#window-terminal .terminal-input');
+                if (input) input.focus();
+            }, 100);
+        });
+
+        // Clock Update
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+            const date = now.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+            document.querySelector('.top-bar-right span').textContent = `${date} ${time}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
